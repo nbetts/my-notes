@@ -1,5 +1,4 @@
-import firebase from 'firebase/app';
-import 'firebase/auth';
+import firebase from 'utils/firebase';
 import { Store } from 'pullstate';
 
 interface IStore {

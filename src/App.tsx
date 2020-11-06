@@ -1,21 +1,23 @@
-import SignInCard from 'components/SignInCard';
-import React from 'react';
-import store, { signOut } from 'store';
+import firebase from 'utils/firebase';
+import React, { useEffect, useState } from 'react';
+import store from 'store';
+import Home from 'pages/Home';
 
 const App = () => {
-  const email = store.useState(s => s.email);
+  const [appLoaded, setAppLoaded] = useState(false);
 
-  return (
-    <div>
-      {email ? (
-        <div>
-          <p>You are signed in as {email}</p>
-          <button onClick={signOut}>Sign out</button>
-        </div>
-      ) : <SignInCard />
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        store.update(s => {
+          s.email = user.email || '';
+        });
       }
-    </div>
-  );
+      setAppLoaded(true);
+    });
+  }, []);
+
+  return appLoaded ? <Home /> : <p>Loading...</p>;
 };
 
 export default App;

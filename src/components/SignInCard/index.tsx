@@ -13,9 +13,8 @@ const SignInCard = () => {
     setSubmitting(true);
 
     try {
-      await signIn(email, password);
+      await signIn(email.trim(), password);
     } catch (error) {
-      console.log('error!', error);
       setErrorMessage(error.message);
       setSubmitting(false);
       setPassword('');
