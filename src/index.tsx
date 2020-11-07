@@ -3,9 +3,10 @@ import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import store from 'store';
 import Home from 'pages/Home';
-import { Grommet, Main, ThemeType } from 'grommet';
+import { Grommet, Main } from 'grommet';
 import LoadingSpinner from 'components/LoadingSpinner';
 import { Reset } from 'styled-reset';
+import theme from 'utils/theme';
 
 const App = () => {
   const [appLoaded, setAppLoaded] = useState(false);
@@ -24,32 +25,12 @@ const App = () => {
   return appLoaded ? <Home /> : <LoadingSpinner />;
 };
 
-const theme: ThemeType = {
-  global: {
-    font: {
-      family: `-apple-system, BlinkMacSystemFont, "Segoe UI"`,
-    },
-    colors: {
-      brand: '#38353a'
-    }
-  },
-  card: {
-    container: {
-      background: '#FFFFFF12',
-      elevation: 'none',
-    },
-    footer: {
-      pad: { horizontal: 'medium', vertical: 'small' },
-      background: '#FFFFFF06',
-    },
-  },
-};
-
 ReactDOM.render(
   <React.StrictMode>
     <Reset />
     <Grommet theme={theme} themeMode="dark" full>
       <Main pad="large" background="brand" align="center">
+        {/* <LoadingSpinner /> */}
         <App />
       </Main>
     </Grommet>

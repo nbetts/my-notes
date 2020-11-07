@@ -1,11 +1,16 @@
 
 import { Box } from 'grommet';
 import React from 'react';
-import { WhisperSpinner } from 'react-spinners-kit';
+import { JellyfishSpinner } from 'react-spinners-kit';
+import { colors } from 'utils/theme';
 
-const LoadingSpinner = () => (
+interface LoadingSpinnerProps {
+  size?: number;
+}
+
+const LoadingSpinner = ({ size }: LoadingSpinnerProps) => (
   <Box fill align="center" justify="center">
-    <WhisperSpinner />
+    <JellyfishSpinner size={size} color={colors["accent-1"]} />
   </Box>
 );
 

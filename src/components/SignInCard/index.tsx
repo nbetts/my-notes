@@ -1,4 +1,5 @@
-import { Card, Button, Form, FormField, Paragraph, TextInput, CardHeader, CardBody, Heading, Box } from "grommet";
+import Button from "components/Button";
+import { Card, Form, FormField, Paragraph, TextInput, CardHeader, CardBody, Heading, Box } from "grommet";
 import React, { useState } from "react";
 import { signIn } from 'store';
 
@@ -22,14 +23,14 @@ const SignInCard = () => {
   };
 
   return (
-    <Card pad="medium" gap="medium" width="medium">
+    <Card pad="medium" gap="medium" width="medium" elevation="large">
       <CardHeader pad={{ bottom: 'small' }} justify="center">
         <Heading>Sign in</Heading>
       </CardHeader>
       <CardBody>
-        <Form onSubmit={() => submitSignIn()}>
+        <Form onSubmit={submitSignIn}>
           <FormField htmlFor="email" label="Email">
-            <TextInput id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <TextInput id="email" value={email} onChange={(e) => setEmail(e.target.value)} autoFocus />
           </FormField>
           <FormField htmlFor="password" label="Password">
             <TextInput id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
@@ -40,7 +41,7 @@ const SignInCard = () => {
             </Box>
           )}
           <Box pad={{ top: 'small' }} align="center">
-            <Button primary type="submit" label="Sign in" disabled={submitting} />
+            <Button primary type="submit" label="Sign in" loading={submitting} />
           </Box>
         </Form>
       </CardBody>
