@@ -1,3 +1,4 @@
+import { Card, Button, Form, FormField, Paragraph, TextInput, CardHeader, CardBody, Heading, Box } from "grommet";
 import React, { useState } from "react";
 import { signIn } from 'store';
 
@@ -7,8 +8,7 @@ const SignInCard = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
-  const submitSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const submitSignIn = async () => {
     setErrorMessage('');
     setSubmitting(true);
 
@@ -22,14 +22,29 @@ const SignInCard = () => {
   };
 
   return (
-    <form onSubmit={submitSignIn}>
-      <label htmlFor="email">Email</label>
-      <input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-      <label htmlFor="password">Password</label>
-      <input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-      {errorMessage && <p>{errorMessage}</p>}
-      <button type="submit" disabled={submitting}>Sign in</button>
-    </form>
+    <Card pad="medium" gap="medium" width="medium">
+      <CardHeader pad={{ bottom: 'small' }} justify="center">
+        <Heading>Sign in</Heading>
+      </CardHeader>
+      <CardBody>
+        <Form onSubmit={() => submitSignIn()}>
+          <FormField htmlFor="email" label="Email">
+            <TextInput id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          </FormField>
+          <FormField htmlFor="password" label="Password">
+            <TextInput id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          </FormField>
+          {errorMessage && (
+            <Box pad={{ vertical: 'small' }}>
+              <Paragraph color="status-error">{errorMessage}</Paragraph>
+            </Box>
+          )}
+          <Box pad={{ top: 'small' }} align="center">
+            <Button primary type="submit" label="Sign in" disabled={submitting} />
+          </Box>
+        </Form>
+      </CardBody>
+    </Card>
   );
 };
 
