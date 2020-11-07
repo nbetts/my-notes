@@ -28,16 +28,6 @@ const theme: ThemeType = {
       }
     }
   },
-  // card: {
-  //   container: {
-  //     background: '#FFFFFF12',
-  //     elevation: 'none',
-  //   },
-  //   footer: {
-  //     pad: { horizontal: 'medium', vertical: 'small' },
-  //     background: '#FFFFFF06',
-  //   },
-  // },
 };
 
 export default theme;

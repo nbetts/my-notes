@@ -29,8 +29,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Reset />
     <Grommet theme={theme} themeMode="dark" full>
-      <Main pad="large" background="brand" align="center">
-        {/* <LoadingSpinner /> */}
+      <Main background="brand">
         <App />
       </Main>
     </Grommet>

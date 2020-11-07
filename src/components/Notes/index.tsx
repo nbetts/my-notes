@@ -1,4 +1,4 @@
-import { Box, Button, Paragraph } from 'grommet';
+import { Button, Menu, Nav, Sidebar } from 'grommet';
 import React from 'react';
 import store, { signOut } from 'store';
 
@@ -6,10 +6,14 @@ const Notes = () => {
   const email = store.useState(s => s.email);
 
   return (
-    <Box gap="medium">
-      <Paragraph>You are signed in as {email}</Paragraph>
-      <Button primary onClick={signOut} label="Sign out" />
-    </Box>
+    <Sidebar
+      elevation="large"
+      header={<Menu label={email} items={[{ label: 'Sign out', onClick: signOut }]} />}
+    >
+      <Nav gap="small">
+        <Button label="Note 1" />
+      </Nav>
+    </Sidebar>
   );
 };
 
