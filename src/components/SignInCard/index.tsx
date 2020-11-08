@@ -9,7 +9,7 @@ const SignInCard = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
-  const submitSignIn = async () => {
+  const handleSignIn = async () => {
     setErrorMessage('');
     setSubmitting(true);
 
@@ -28,7 +28,7 @@ const SignInCard = () => {
         <Heading>Sign in</Heading>
       </CardHeader>
       <CardBody>
-        <Form onSubmit={submitSignIn}>
+        <Form onSubmit={handleSignIn}>
           <FormField htmlFor="email" label="Email">
             <TextInput id="email" value={email} onChange={(e) => setEmail(e.target.value)} autoFocus />
           </FormField>
@@ -36,7 +36,7 @@ const SignInCard = () => {
             <TextInput id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
           </FormField>
           {errorMessage && (
-            <Box pad={{ vertical: 'small' }}>
+            <Box pad={{ vertical: 'small' }} align="center">
               <Paragraph color="status-error">{errorMessage}</Paragraph>
             </Box>
           )}

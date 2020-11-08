@@ -15,7 +15,7 @@ const App = () => {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         store.update(s => {
-          s.email = user.email || '';
+          s.user = { email: user.email || '' };
         });
       }
       setAppLoaded(true);

@@ -10,6 +10,7 @@ export const colors = {
   'neutral-2': '#09AEA6',
   'neutral-3': '#2A628D',
   'neutral-4': '#3B2F89',
+  'status-error': '#FF3A3A',
 }
 
 const theme: ThemeType = {

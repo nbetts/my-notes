@@ -5,7 +5,7 @@ import React from 'react';
 import store from 'store';
 
 const Home = () => {
-  const email = store.useState(s => s.email);
+  const email = store.useState(s => s.user.email);
   
   return email ? (
     <Box fill direction="row">
