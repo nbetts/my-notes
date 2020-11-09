@@ -4,22 +4,22 @@ import { Note, User } from 'types';
 
 /**
  * Store state.
+ * @param busy Whether or not the app is busy performing an action (not yet used)
  * @param user The user
  * @param notes The user's notes
- * @param busy Whether or not the app is busy performing an action
  */
 interface IStore {
+  busy: boolean;
   user: User;
   notes: Note[];
-  busy: boolean;
 }
 
 const defaultState: IStore = {
+  busy: false,
   user: {
     email: '',
   },
   notes: [],
-  busy: false,
 };
 
 const store = new Store<IStore>(defaultState);
@@ -67,10 +67,12 @@ export const createNote = async () => {
     dateCreated: date,
     dateModified: date,
   });
+  getNotes();
 };
 
-export const deleteNote = async () => {
-
+export const deleteNote = async (id: string) => {
+  await firebase.firestore().collection('notes').doc(id).delete();
+  getNotes();
 };
 
 export default store;
