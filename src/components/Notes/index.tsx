@@ -4,7 +4,7 @@ import HelpPopup from 'components/HelpPopup';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import { Box, InfiniteScroll, Menu, Nav, Sidebar, Text } from 'grommet';
 import React, { useEffect, useState } from 'react';
-import store, { createNote, getNotes, signOut } from 'store';
+import store, { createNote, signOut } from 'store';
 import { Note } from 'types';
 import NoteEditor from './NoteEditor';
 
@@ -16,10 +16,6 @@ const Notes = () => {
   let notes = store.useState(s => s.notes);
   const [selectedNoteId, setSelectedNoteId] = useState('');
   const selectedNoteIndex = notes.findIndex(({ id }) => id === selectedNoteId);
-
-  useEffect(() => {
-    getNotes();
-  }, []);
 
   useEffect(() =>  {
     if (!selectedNoteId) {

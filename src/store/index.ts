@@ -4,18 +4,20 @@ import { Note, User } from 'types';
 
 /**
  * Store state.
- * @param busy Whether or not the app is busy performing an action (not yet used)
+ * @param loaded Whether or not the app has initially loaded
  * @param user The user
  * @param notes The user's notes
+ * @param notesListener A listener function to receive real time updates to the notes collection in firebase
  */
 interface IStore {
-  busy: boolean;
+  loaded: boolean;
   user: User;
   notes: Note[];
+  notesListener?: () => void;
 }
 
 const defaultState: IStore = {
-  busy: false,
+  loaded: false,
   user: {
     email: '',
   },
@@ -23,6 +25,71 @@ const defaultState: IStore = {
 };
 
 const store = new Store<IStore>(defaultState);
+
+const notesCollection = firebase.firestore().collection('notes');
+
+firebase.auth().onAuthStateChanged((user) => {
+  if (user) {
+    store.update(s => {
+      s.user = { email: user.email || '' };
+
+      // Upon sign in, create a listener on the notes collection in firebase to receive real time updates.
+      s.notesListener = notesCollection.orderBy('dateModified', 'desc').onSnapshot((snapshot) => {
+        const notes = snapshot.docs.map<Note>((doc) => {
+          const data = doc.data();
+      
+          return {
+            id: doc.id,
+            content: data.content,
+            deleted: data.deleted,
+            dateCreated: data.dateCreated,
+            dateModified: data.dateModified,
+          };
+        });
+      
+        store.update(s => {
+          s.notes = notes;
+        });
+      });
+    });
+  } else {
+    store.update(s => {
+      s.user = defaultState.user;
+
+      // Upon sign out, terminate the note listener if it has been previously created.
+      s.notesListener && s.notesListener();
+      s.notesListener = undefined;
+    });
+  }
+
+  if (!store.getRawState().loaded) {
+    store.update(s => {
+      s.loaded = true;
+    });
+  }
+});
+
+export const createNote = async () => {
+  const date = new Date();
+  await notesCollection.add({
+    content: '',
+    deleted: false,
+    dateCreated: date,
+    dateModified: date,
+  });
+};
+
+export const updateNote = async (id: string, content: string) => {
+  const date = new Date();
+  await notesCollection.doc(id).update({
+    content,
+    dateModified: date,
+  });
+};
+
+export const deleteNote = async (id: string) => {
+  await notesCollection.doc(id).delete();
+};
 
 export const signIn = async (email: string, password: string) => {
   await firebase.auth().signInWithEmailAndPassword(email, password);
@@ -37,51 +104,6 @@ export const signOut = async () => {
     s.user = defaultState.user;
     s.notes = defaultState.notes;
   });
-};
-
-export const getNotes = async () => {
-  const response = await firebase.firestore().collection('notes').orderBy('dateModified', 'desc').get();
-
-  const notes = response.docs.map<Note>((doc) => {
-    const data = doc.data();
-
-    return {
-      id: doc.id,
-      content: data.content,
-      deleted: data.deleted,
-      dateCreated: data.dateCreated,
-      dateModified: data.dateModified,
-    };
-  });
-
-  store.update(s => {
-    s.notes = notes;
-  });
-};
-
-export const createNote = async () => {
-  const date = new Date();
-  await firebase.firestore().collection('notes').add({
-    content: '',
-    deleted: false,
-    dateCreated: date,
-    dateModified: date,
-  });
-  getNotes();
-};
-
-export const updateNote = async (id: string, content: string) => {
-  const date = new Date();
-  await firebase.firestore().collection('notes').doc(id).update({
-    content,
-    dateModified: date,
-  });
-  getNotes();
-};
-
-export const deleteNote = async (id: string) => {
-  await firebase.firestore().collection('notes').doc(id).delete();
-  getNotes();
 };
 
 export default store;

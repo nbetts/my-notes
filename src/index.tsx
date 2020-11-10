@@ -1,5 +1,4 @@
-import firebase from 'utils/firebase';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import store from 'store';
 import Home from 'pages/Home';
@@ -9,20 +8,9 @@ import { Reset } from 'styled-reset';
 import theme from 'utils/theme';
 
 const App = () => {
-  const [appLoaded, setAppLoaded] = useState(false);
+  const loaded = store.useState(s => s.loaded);
 
-  useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        store.update(s => {
-          s.user = { email: user.email || '' };
-        });
-      }
-      setAppLoaded(true);
-    });
-  }, []);
-
-  return appLoaded ? <Home /> : <LoadingSpinner />;
+  return loaded ? <Home /> : <LoadingSpinner />;
 };
 
 ReactDOM.render(
@@ -30,7 +18,7 @@ ReactDOM.render(
     <Reset />
     <Grommet theme={theme} themeMode="dark" full background="brand">
       <Main>
-      <App />
+        <App />
       </Main>
     </Grommet>
   </React.StrictMode>,
