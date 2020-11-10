@@ -1,3 +1,7 @@
+declare global {
+  interface Date extends firebase.default.firestore.Timestamp {}
+}
+
 /**
  * A user.
  * @param email email address

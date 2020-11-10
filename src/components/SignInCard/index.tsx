@@ -1,5 +1,5 @@
 import Button from "components/Button";
-import { Card, Form, FormField, Paragraph, TextInput, CardHeader, CardBody, Heading, Box } from "grommet";
+import { Card, Form, FormField, Text, TextInput, CardHeader, CardBody, Heading, Box } from "grommet";
 import React, { useState } from "react";
 import { signIn } from 'store';
 
@@ -37,7 +37,7 @@ const SignInCard = () => {
           </FormField>
           {errorMessage && (
             <Box pad={{ vertical: 'small' }} align="center">
-              <Paragraph color="status-error">{errorMessage}</Paragraph>
+              <Text color="status-error">{errorMessage}</Text>
             </Box>
           )}
           <Box pad={{ top: 'small' }} align="center">

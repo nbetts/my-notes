@@ -70,6 +70,15 @@ export const createNote = async () => {
   getNotes();
 };
 
+export const updateNote = async (id: string, content: string) => {
+  const date = new Date();
+  await firebase.firestore().collection('notes').doc(id).update({
+    content,
+    dateModified: date,
+  });
+  getNotes();
+};
+
 export const deleteNote = async (id: string) => {
   await firebase.firestore().collection('notes').doc(id).delete();
   getNotes();

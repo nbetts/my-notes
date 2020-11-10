@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import store from 'store';
 import Home from 'pages/Home';
-import { Grommet, Main } from 'grommet';
+import { Grommet } from 'grommet';
 import LoadingSpinner from 'components/LoadingSpinner';
 import { Reset } from 'styled-reset';
 import theme from 'utils/theme';
@@ -28,10 +28,8 @@ const App = () => {
 ReactDOM.render(
   <React.StrictMode>
     <Reset />
-    <Grommet theme={theme} themeMode="dark" full>
-      <Main background="brand">
-        <App />
-      </Main>
+    <Grommet theme={theme} themeMode="dark" full background="brand">
+      <App />
     </Grommet>
   </React.StrictMode>,
   document.getElementById('root')
