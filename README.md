@@ -17,14 +17,11 @@ You will also see any lint errors in the console.
 ## To do
 
 - note saved indicator
-- realtime listener on notes
 - delete note button
 - help info alert
 - adjust sidebar styling to have max width
-- move firestore function calls to functions to allow for server side validation
-- server side validation (in functions)
-- client side validation
-- add documentation for deploying functions and app
+- firestore validation
+- add documentation for deploying app
 - split sidebar into multiple components for more efficient rendering
 - last modified dates in sidebar should update every 5 seconds
 - analyse build size to see what imports can be removed

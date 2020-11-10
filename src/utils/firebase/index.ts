@@ -1,7 +1,6 @@
 import firebaseApp from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
-import 'firebase/functions';
 
 const config = {
   apiKey: "AIzaSyBzSm7kol1TdiXkVGzpB5vhdhwCEGN_OXM",
@@ -14,9 +13,5 @@ const config = {
 };
 
 const firebase = firebaseApp.initializeApp(config);
-
-// Initialise functions. See functions/src/index.ts for function details.
-const { httpsCallable } = firebase.functions();
-export const isAuthed = httpsCallable('isAuthed');
 
 export default firebase;
