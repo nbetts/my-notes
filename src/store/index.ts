@@ -40,7 +40,7 @@ export const signOut = async () => {
 };
 
 export const getNotes = async () => {
-  const response = await firebase.firestore().collection('notes').get();
+  const response = await firebase.firestore().collection('notes').orderBy('dateModified', 'desc').get();
 
   const notes = response.docs.map<Note>((doc) => {
     const data = doc.data();

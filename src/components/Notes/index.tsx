@@ -14,11 +14,8 @@ const Notes = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const email = store.useState(s => s.user.email);
   let notes = store.useState(s => s.notes);
-  notes = [...notes].sort((a, b) => b.dateModified.seconds - a.dateModified.seconds);
   const [selectedNoteId, setSelectedNoteId] = useState('');
   const selectedNoteIndex = notes.findIndex(({ id }) => id === selectedNoteId);
-  console.log('notes', notes);
-  console.log('notes[selectedNoteIndex]', notes[selectedNoteIndex]);
 
   useEffect(() => {
     getNotes();

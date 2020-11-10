@@ -27,5 +27,4 @@ You will also see any lint errors in the console.
 - add documentation for deploying functions and app
 - split sidebar into multiple components for more efficient rendering
 - last modified dates in sidebar should update every 5 seconds
-- maybe use firestore filtering to return dates by date modified
 - analyse build size to see what imports can be removed
