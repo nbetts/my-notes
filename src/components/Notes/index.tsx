@@ -6,6 +6,7 @@ import store, { createNote, getNotes, signOut } from 'store';
 
 const Notes = () => {
   const [submitting, setSubmitting] = useState(false);
+  const [helpDisplayed, setHelpDisplayed] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const email = store.useState(s => s.user.email);
   const notes = store.useState(s => s.notes);
@@ -40,6 +41,7 @@ const Notes = () => {
         </Nav>
       </Sidebar>
       {errorMessage && <ErrorPopup message={errorMessage} onClose={() => setErrorMessage('')} />}
+      {helpDisplayed && <HelpPopup onClose={() => setHelpDisplayed(false)} />}
     </>
   );
 };
