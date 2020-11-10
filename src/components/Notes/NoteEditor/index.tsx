@@ -26,6 +26,7 @@ const NoteEditor = ({ note }: NoteEditorProps) => {
             fill
             resize={false}
             value={content}
+            placeholder="Enter some text here..."
             onChange={(event) => {
               setContent(event.target.value);
               debouncedUpdateNote(event.target.value);
@@ -33,7 +34,7 @@ const NoteEditor = ({ note }: NoteEditorProps) => {
             />
         </Box>
         <Box elevation="large" pad="small" overflow="auto">
-          <Markdown>{content}</Markdown>
+          <Markdown>{content || "And Markdown will appear here!"}</Markdown>
         </Box>
       </Grid>
     </Box>
