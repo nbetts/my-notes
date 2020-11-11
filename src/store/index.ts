@@ -19,6 +19,7 @@ interface IStore {
 const defaultState: IStore = {
   loaded: false,
   user: {
+    uid: '',
     email: '',
   },
   notes: [],
@@ -26,12 +27,17 @@ const defaultState: IStore = {
 
 const store = new Store<IStore>(defaultState);
 
-const notesCollection = firebase.firestore().collection('notes');
+let notesCollection = firebase.firestore().collection('users');
 
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
+    notesCollection = firebase.firestore().collection('users').doc(user.uid).collection('notes');
+
     store.update(s => {
-      s.user = { email: user.email || '' };
+      s.user = {
+        uid: user.uid || '',
+        email: user.email || '',
+      };
 
       // Upon sign in, create a listener on the notes collection in firebase to receive real time updates.
       s.notesListener = notesCollection.orderBy('dateModified', 'desc').onSnapshot((snapshot) => {
@@ -40,6 +46,7 @@ firebase.auth().onAuthStateChanged((user) => {
       
           return {
             id: doc.id,
+            uid: data.uid,
             content: data.content,
             deleted: data.deleted,
             dateCreated: data.dateCreated,
@@ -55,6 +62,7 @@ firebase.auth().onAuthStateChanged((user) => {
   } else {
     store.update(s => {
       s.user = defaultState.user;
+      s.notes = defaultState.notes;
 
       // Upon sign out, terminate the note listener if it has been previously created.
       s.notesListener && s.notesListener();
@@ -72,6 +80,7 @@ firebase.auth().onAuthStateChanged((user) => {
 export const createNote = async () => {
   const date = new Date();
   await notesCollection.add({
+    uid: store.getRawState().user.uid,
     content: '',
     deleted: false,
     dateCreated: date,
@@ -93,17 +102,10 @@ export const deleteNote = async (id: string) => {
 
 export const signIn = async (email: string, password: string) => {
   await firebase.auth().signInWithEmailAndPassword(email, password);
-  store.update(s => {
-    s.user = { email };
-  });
 };
 
 export const signOut = async () => {
   await firebase.auth().signOut();
-  store.update(s => {
-    s.user = defaultState.user;
-    s.notes = defaultState.notes;
-  });
 };
 
 export default store;

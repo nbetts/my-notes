@@ -17,9 +17,6 @@ You will also see any lint errors in the console.
 ## To do
 
 - note saved indicator
-- delete note button
-- help info alert
-- adjust sidebar styling to have max width
 - firestore validation
 - add documentation for deploying app
 - split sidebar into multiple components for more efficient rendering

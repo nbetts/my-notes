@@ -19,25 +19,23 @@ const NoteEditor = ({ note }: NoteEditorProps) => {
   }, [note]);
 
   return (
-    <Box pad="small" fill>
-      <Grid columns={{ count: 2, size: 'auto '}} fill gap="small">
-        <Box elevation="large" pad="small">
-          <TextArea
-            fill
-            resize={false}
-            value={content}
-            placeholder="Enter some text here..."
-            onChange={(event) => {
-              setContent(event.target.value);
-              debouncedUpdateNote(event.target.value);
-            }}
-            />
-        </Box>
-        <Box elevation="large" pad="small" overflow="auto">
-          <Markdown>{content || "And Markdown will appear here!"}</Markdown>
-        </Box>
-      </Grid>
-    </Box>
+    <Grid columns={{ count: 2, size: 'auto '}} fill gap="small">
+      <Box elevation="large" pad="small">
+        <TextArea
+          fill
+          resize={false}
+          value={content}
+          placeholder="Enter some text here..."
+          onChange={(event) => {
+            setContent(event.target.value);
+            debouncedUpdateNote(event.target.value);
+          }}
+          />
+      </Box>
+      <Box elevation="large" pad="small" overflow="auto">
+        <Markdown>{content || "And Markdown will appear here!"}</Markdown>
+      </Box>
+    </Grid>
   );
 };
 

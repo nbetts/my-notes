@@ -2,15 +2,17 @@ import Button from 'components/Button';
 import ErrorPopup from 'components/ErrorPopup';
 import HelpPopup from 'components/HelpPopup';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
-import { Box, InfiniteScroll, Menu, Nav, Sidebar, Text } from 'grommet';
+import { Box, InfiniteScroll, Layer, Menu, Nav, Paragraph, Sidebar, Text } from 'grommet';
+import { Trash } from 'grommet-icons';
 import React, { useEffect, useState } from 'react';
-import store, { createNote, signOut } from 'store';
+import store, { createNote, deleteNote, signOut } from 'store';
 import { Note } from 'types';
 import NoteEditor from './NoteEditor';
 
 const Notes = () => {
   const [submitting, setSubmitting] = useState(false);
   const [helpDisplayed, setHelpDisplayed] = useState(false);
+  const [deleteConfirmationDisplayed, setDeleteConfirmationDisplayed] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const email = store.useState(s => s.user.email);
   let notes = store.useState(s => s.notes);
@@ -36,9 +38,12 @@ const Notes = () => {
     }
   };
 
+  const closeDeleteConfirmation = () => setDeleteConfirmationDisplayed(false);
+
   return (
     <>
       <Sidebar
+        width="medium"
         elevation="large"
         pad="none"
         gap="none"
@@ -62,14 +67,19 @@ const Notes = () => {
                     key={note.id}
                     pad="small"
                     border="bottom"
-                    background={index === selectedNoteIndex ? "dark-2" : "none"}
-                    hoverIndicator="background"
+                    background={index === selectedNoteIndex ? "dark-1" : "none"}
+                    hoverIndicator="dark-1"
                     onClick={() => setSelectedNoteId(note.id)}
                   >
-                    <Text truncate>{displayText}</Text>
-                    <Text size="small" color="dark-4" margin={{ top: 'xsmall' }}>
-                      {formatDistanceToNow(note.dateModified.toDate(), { includeSeconds: true, addSuffix: true })}
-                    </Text>
+                    <Box direction="row" justify="between" align="center">
+                      <Text truncate>{displayText}</Text>
+                    </Box>
+                    <Box direction="row" justify="between" align="center" margin={{ top: 'xsmall' }}>
+                      <Text size="small" color="dark-4">
+                        {formatDistanceToNow(note.dateModified.toDate(), { includeSeconds: true, addSuffix: true })}
+                      </Text>
+                      <Button plain icon={<Trash color="dark-4" size="16" />} onClick={() => setDeleteConfirmationDisplayed(true)} />
+                    </Box>
                   </Box>
                 );
               }}
@@ -77,7 +87,20 @@ const Notes = () => {
           </Box>
         </Nav>
       </Sidebar>
-      {selectedNoteIndex >= 0 && <NoteEditor note={notes[selectedNoteIndex]} />}
+      <Box pad="small" fill>
+        {selectedNoteIndex >= 0 && <NoteEditor note={notes[selectedNoteIndex]} />}
+      </Box>
+      {deleteConfirmationDisplayed && (
+        <Layer onEsc={closeDeleteConfirmation} onClickOutside={closeDeleteConfirmation} animation="fadeIn">
+          <Box background="brand" align="center" justify="center" pad="medium" elevation="large">
+            <Paragraph margin="xsmall">Are you sure you want to delete this note?</Paragraph>
+            <Box fill direction="row" justify="evenly" margin={{ top: 'medium' }}>
+              <Button primary label="Yes" onClick={() => deleteNote(notes[selectedNoteIndex].id)} />
+              <Button secondary label="Cancel" onClick={closeDeleteConfirmation} />
+            </Box>
+          </Box>
+        </Layer>
+      )}
       {errorMessage && <ErrorPopup message={errorMessage} onClose={() => setErrorMessage('')} />}
       {helpDisplayed && <HelpPopup onClose={() => setHelpDisplayed(false)} />}
     </>

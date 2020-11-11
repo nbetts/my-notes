@@ -14,4 +14,11 @@ const config = {
 
 const firebase = firebaseApp.initializeApp(config);
 
+// Uncomment to use the firebase emulators.
+// if (process.env.NODE_ENV !== 'production') {
+//   console.log('Using firebase emulator for auth and firestore');
+//   firebase.auth().useEmulator('http://localhost:9099/');
+//   firebase.firestore().useEmulator('localhost', 8080);
+// }
+
 export default firebase;
