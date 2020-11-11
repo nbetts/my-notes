@@ -3,7 +3,7 @@ import ErrorPopup from 'components/ErrorPopup';
 import HelpPopup from 'components/HelpPopup';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import { Box, InfiniteScroll, Layer, Menu, Nav, Paragraph, Sidebar, Text } from 'grommet';
-import { Trash } from 'grommet-icons';
+import { Down, Trash } from 'grommet-icons';
 import React, { useEffect, useState } from 'react';
 import store, { createNote, deleteNote, signOut } from 'store';
 import { Note } from 'types';
@@ -47,7 +47,21 @@ const Notes = () => {
         elevation="large"
         pad="none"
         gap="none"
-        header={<Menu margin="small" label={email} items={[{ label: 'Sign out', onClick: signOut }]} />}
+        header={(
+          <Menu
+            margin="small"
+            label={email}
+            items={[{ label: 'Sign out', onClick: signOut }]}
+            children={(
+              <Box direction="row" align="center" pad="small">
+                <Text truncate>{email}</Text>
+                <Box pad={{ left: 'small' }}>
+                  <Down color="accent-1" size="16" />
+                </Box>
+              </Box>
+            )}
+          />
+        )}
         footer={<Button margin="small" label="Help" onClick={() => setHelpDisplayed(true)} />}
       >
         <Nav gap="small">
@@ -95,7 +109,10 @@ const Notes = () => {
           <Box background="brand" align="center" justify="center" pad="medium" elevation="large">
             <Paragraph margin="xsmall">Are you sure you want to delete this note?</Paragraph>
             <Box fill direction="row" justify="evenly" margin={{ top: 'medium' }}>
-              <Button primary label="Yes" onClick={() => deleteNote(notes[selectedNoteIndex].id)} />
+              <Button primary label="Yes" onClick={() => {
+                deleteNote(notes[selectedNoteIndex].id);
+                closeDeleteConfirmation();
+              }} />
               <Button secondary label="Cancel" onClick={closeDeleteConfirmation} />
             </Box>
           </Box>

@@ -33,7 +33,7 @@ const NoteEditor = ({ note }: NoteEditorProps) => {
           />
       </Box>
       <Box elevation="large" pad="small" overflow="auto">
-        <Markdown>{content || "And Markdown will appear here!"}</Markdown>
+        <Markdown>{content || 'And Markdown will appear here!'}</Markdown>
       </Box>
     </Grid>
   );
