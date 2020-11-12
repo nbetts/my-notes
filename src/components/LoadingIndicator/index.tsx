@@ -4,14 +4,14 @@ import React from 'react';
 import { JellyfishSpinner } from 'react-spinners-kit';
 import { colors } from 'utils/theme';
 
-interface LoadingSpinnerProps {
+interface LoadingIndicatorProps {
   size?: number;
 }
 
-const LoadingSpinner = ({ size }: LoadingSpinnerProps) => (
+const LoadingIndicator = ({ size }: LoadingIndicatorProps) => (
   <Box fill align="center" justify="center">
     <JellyfishSpinner size={size} color={colors["accent-1"]} />
   </Box>
 );
 
-export default LoadingSpinner;
+export default LoadingIndicator;

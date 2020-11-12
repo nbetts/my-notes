@@ -2,17 +2,15 @@ import { Box, Button, Layer, Text } from 'grommet';
 import { CircleAlert, FormClose } from 'grommet-icons';
 import React from 'react';
 
-interface ErrorPopupProps {
-  message?: string;
-  onClose: () => void;
+interface ErrorAlertProps {
+  message: string;
 }
 
-const ErrorPopup = ({ message, onClose }: ErrorPopupProps) => (
+const ErrorAlert = ({ message }: ErrorAlertProps) => (
   <Layer
     position="bottom"
     modal={false}
     margin={{ vertical: 'medium', horizontal: 'small' }}
-    onEsc={onClose}
     responsive={false}
     plain
   >
@@ -30,9 +28,9 @@ const ErrorPopup = ({ message, onClose }: ErrorPopupProps) => (
         <CircleAlert />
         <Text>{message}</Text>
       </Box>
-      <Button icon={<FormClose />} onClick={onClose} plain />
+      <Button icon={<FormClose />} plain />
     </Box>
   </Layer>
 );
 
-export default ErrorPopup;
+export default ErrorAlert;
