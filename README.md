@@ -1,22 +1,26 @@
-# Getting Started with Create React App
+# My Notes
+
+![Website screenshot](.github/website_screenshot.png)
+
+A simple online notes editor with Firebase auth, storage and hosting: [my-notes-41f39.firebaseapp.com](https://my-notes-41f39.firebaseapp.com)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Running the app
 
-In the project directory, you can run:
+For first time setup, in the project directory run `npm install` to install the project dependencies.
 
-### `yarn start`
+To run the app locally run `npm start`.
 
-Runs the app in the development mode.
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Deploying the app
 
-The page will reload if you make edits.
-You will also see any lint errors in the console.
+Creating a pull request will automatically run a preview deployment.
+
+Merging changes into the `main` branch will automatically run a production deployment.
+
+See the relevant Github Actions in Github for deployment details.
 
 ## To do
 
-- add documentation for deploying app
-- analyse build size to see what imports can be removed
 - improve markdown rendering
 - fix sidebar list overflow
