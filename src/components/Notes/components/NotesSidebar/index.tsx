@@ -1,4 +1,4 @@
-import Button from 'components/Button';
+import LoadingButton from 'components/LoadingButton';
 import DeleteNoteModal from 'components/Modals/DeleteNoteModal';
 import { Box, InfiniteScroll, Nav, Sidebar } from 'grommet';
 import React, { useState } from 'react';
@@ -43,7 +43,7 @@ const NotesSidebar = () => {
   return (
     <Sidebar width="medium" elevation="large" pad="none" gap="none" header={<SidebarHeader />} footer={<SidebarFooter />}>
       <Nav gap="small">
-        <Button margin="small" label="+ Add note" onClick={handleCreateNote} loading={addingNote} />
+        <LoadingButton margin="small" label="+ Add note" onClick={handleCreateNote} loading={addingNote} />
         <Box overflow="auto" border="top">
           <InfiniteScroll items={notes}>
             {(note: Note, index: number) => (
