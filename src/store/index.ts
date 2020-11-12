@@ -48,7 +48,6 @@ firebase.auth().onAuthStateChanged((user) => {
             id: doc.id,
             uid: data.uid,
             content: data.content,
-            deleted: data.deleted,
             dateCreated: data.dateCreated,
             dateModified: data.dateModified,
           };
@@ -82,7 +81,6 @@ export const createNote = async () => {
   await notesCollection.add({
     uid: store.getRawState().user.uid,
     content: '',
-    deleted: false,
     dateCreated: date,
     dateModified: date,
   });
