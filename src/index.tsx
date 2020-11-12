@@ -3,14 +3,13 @@ import ReactDOM from 'react-dom';
 import store from 'store';
 import Home from 'pages/Home';
 import { Grommet, Main } from 'grommet';
-import LoadingSpinner from 'components/LoadingSpinner';
+import LoadingIndicator from 'components/LoadingIndicator';
 import { Reset } from 'styled-reset';
 import theme from 'utils/theme';
 
 const App = () => {
   const loaded = store.useState(s => s.loaded);
-
-  return loaded ? <Home /> : <LoadingSpinner />;
+  return loaded ? <Home /> : <LoadingIndicator />;
 };
 
 ReactDOM.render(

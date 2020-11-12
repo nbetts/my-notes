@@ -2,24 +2,25 @@ import { Box, Grid, Markdown, TextArea } from 'grommet';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Note } from 'types';
 import debounce from 'lodash.debounce';
-import { updateNote } from 'store';
 
 interface NoteEditorProps {
   note: Note;
+  onChange: (content: string) => void;
 }
 
-const NoteEditor = ({ note }: NoteEditorProps) => {
+const NoteEditor = ({ note, onChange }: NoteEditorProps) => {
   const [content, setContent] = useState(note.content);
-  // Callback dependency is known upfront
+
+  // Debounce the onChange event to prevent too many calls. The callback dependency here is known upfront.
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const debouncedUpdateNote = useCallback(debounce((newContent: string) => updateNote(note.id, newContent), 500), [note]);
+  const debouncedUpdateNote = useCallback(debounce((newContent: string) => onChange(newContent), 500), [note]);
 
   useEffect(() => {
     setContent(note.content);
   }, [note]);
 
   return (
-    <Grid columns={{ count: 2, size: 'auto '}} fill gap="small">
+    <Grid columns={{ count: 2, size: 'auto '}} fill gap="small" pad="small">
       <Box elevation="large" pad="small">
         <TextArea
           fill
