@@ -1,4 +1,4 @@
-import Button from "components/Button";
+import LoadingButton from "components/LoadingButton";
 import { Form, FormField, Text, TextInput, Heading, Box } from "grommet";
 import React, { useState } from "react";
 import { signIn } from 'store';
@@ -39,7 +39,7 @@ const SignInCard = () => {
             </Box>
           )}
           <Box pad={{ top: 'small' }} align="center">
-            <Button primary type="submit" label="Sign in" loading={submitting} />
+            <LoadingButton primary type="submit" label="Sign in" loading={submitting} />
           </Box>
         </Form>
       </Box>
