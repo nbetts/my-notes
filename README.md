@@ -17,8 +17,6 @@ You will also see any lint errors in the console.
 ## To do
 
 - add documentation for deploying app
-- split sidebar into multiple components for more efficient rendering
-- last modified dates in sidebar should update every 5 seconds
 - analyse build size to see what imports can be removed
 - improve markdown rendering
 - fix sidebar list overflow
