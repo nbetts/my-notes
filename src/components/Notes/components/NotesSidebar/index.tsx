@@ -2,7 +2,7 @@ import LoadingButton from 'components/LoadingButton';
 import DeleteNoteModal from 'components/Modals/DeleteNoteModal';
 import { Box, InfiniteScroll, Nav, Sidebar } from 'grommet';
 import React, { useState } from 'react';
-import store, { createNote, deleteNote, setErrorMessage, updateSelectedNote } from 'store';
+import store, { createNote, deleteNote, setErrorAlertMessage, updateSelectedNote } from 'store';
 import { Note } from 'types';
 import NotesListItem from './components/NotesListItem';
 import SidebarFooter from './components/SidebarFooter';
@@ -21,7 +21,7 @@ const NotesSidebar = () => {
     try {
       await createNote();
     } catch (error) {
-      setErrorMessage(error.message);
+      setErrorAlertMessage(error.message);
     } finally {
       setAddingNote(false);
     }
@@ -36,7 +36,7 @@ const NotesSidebar = () => {
       await deleteNote(selectedNote.id);
       setDeleteNoteModalOpen(false);
     } catch (error) {
-      setErrorMessage(error.message);
+      setErrorAlertMessage(error.message);
     }
   };
 
@@ -48,6 +48,7 @@ const NotesSidebar = () => {
           <InfiniteScroll items={notes}>
             {(note: Note, index: number) => (
               <NotesListItem
+                key={note.id}
                 note={note}
                 highlighted={index === selectedNoteIndex}
                 onSelect={() => updateSelectedNote(note)}

@@ -128,7 +128,7 @@ export const signOut = async () => {
   await firebase.auth().signOut();
 };
 
-export const setErrorMessage = (errorMessage: string) => {
+export const setErrorAlertMessage = (errorMessage: string) => {
   store.update(s => {
     s.errorMessage = errorMessage;
   });
